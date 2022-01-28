@@ -62,12 +62,18 @@ public class CreatureController : MonoBehaviour
 
     private void runNavMeshAgent()
     {
-        NavMeshAgentManager.destination = PlayerController.ActivePlayers[(int)Players.Yellow].transform.position;
+
+        _navMeshAgentManager.destination = PlayerController.ActivePlayers[(int)Players.Yellow].transform.position; //WANDER
         if (_isPurpleInRange)
         {
             Vector3 v = transform.position - PlayerController.ActivePlayers[(int)Players.Purple].transform.position;
             _navMeshAgentManager.nextPosition += v.normalized * _data.PurpleRepelper;
         }
+    }
+    // Wander attempt 1#
+    private void Wander()
+    {
+
     }
 
     private void toggleNavMeshRigidBody(bool isEnabled)

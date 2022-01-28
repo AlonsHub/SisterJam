@@ -298,7 +298,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Run
-  m_Speed: 0.15
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5118837575221422243}
@@ -311,7 +311,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: dde9cfddb37b948d184f97fbdbc9bf5f, type: 3}
+  m_Motion: {fileID: 1827226128182048838, guid: 85d4c94c9525476478aec7b955780548,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: vely
   m_MirrorParameter: 

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -60,12 +62,18 @@ public class CreatureController : MonoBehaviour
 
     private void runNavMeshAgent()
     {
-        NavMeshAgentManager.destination = PlayerController.ActivePlayers[(int)Players.Yellow].transform.position;
+
+        _navMeshAgentManager.destination = PlayerController.ActivePlayers[(int)Players.Yellow].transform.position; //WANDER
         if (_isPurpleInRange)
         {
             Vector3 v = transform.position - PlayerController.ActivePlayers[(int)Players.Purple].transform.position;
             _navMeshAgentManager.nextPosition += v.normalized * _data.PurpleRepelper;
         }
+    }
+    // Wander attempt 1#
+    private void Wander()
+    {
+
     }
 
     private void toggleNavMeshRigidBody(bool isEnabled)
@@ -78,37 +86,61 @@ public class CreatureController : MonoBehaviour
 
 
     #region => ===== Player Effects Methods =====
+   
+   
 
     private void runPlayerAtkSequence(Players player)
     {
         switch (player)
         {
             case Players.Yellow:
-                if(_isYellowInRange) _ = YellowAtkTriggered();
+                //if(_isYellowInRange) _ = YellowAtkTriggered();
                 break;
             case Players.Purple:
-                if (_isPurpleInRange) _ = PurpleAtkTriggered();
+                if (_isPurpleInRange)
+                    StartCoroutine(nameof(PurpleAtkCorou));
                 break;
             default:
                 break;
         }
     }
-
-    private async Task PurpleAtkTriggered()
+    IEnumerator PurpleAtkCorou()
     {
         // 1. disable rigidbody kinematics & nav mesh agent
         toggleNavMeshRigidBody(false);
+        yield return new WaitForSeconds(.5f);
         // 2. apply explosive force to rigidboy.
-        _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position, _data.AtkForceHeight);
+        _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position,_data.AtkExplosionRadius ,_data.AtkForceHeight, ForceMode.Impulse);
+        yield return new WaitForSeconds(_data.PurpleAtkDuration - .5f);
         // 3. wait for duration
-        await Task.Delay(_data.PurpleAtkDuration * 1000);
         toggleNavMeshRigidBody(true);
     }
 
+    //IEnumerator YellowAtkCorou()
+    //{
+    //    //increase pull of both animal and monsters (pulling the animals MORE than monsters, enough to make animals FASTER than monsters in approaching yellow
+    //    while ()
+    //    {
 
-    private async Task YellowAtkTriggered()
-    {
-    }
+    //    }
+    //}
+    //private async Task PurpleAtkTriggered()
+    //{
+    //    // 1. disable rigidbody kinematics & nav mesh agent
+    //    toggleNavMeshRigidBody(false);
+    //    // 2. apply explosive force to rigidboy.
+    //    _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position, _data.AtkExplosionRadius, _data.AtkForceHeight, ForceMode.Impulse);
+    //    // 3. wait for duration
+    //    await Task.Delay(_data.PurpleAtkDuration * 1000);
+    //    toggleNavMeshRigidBody(true);
+    //}
+
+
+    //private async Task YellowAtkTriggered()
+    //{
+
+
+    //}
 
 
 

@@ -41,6 +41,7 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 		anim.SetBool("move", shouldMove);
 		anim.SetFloat("vely", cc.velocity.magnitude);
 
+		if(shouldMove)
 		transform.LookAt(nextPos);
 
 		if (cc.isGrounded)

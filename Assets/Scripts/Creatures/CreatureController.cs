@@ -110,7 +110,7 @@ public class CreatureController : MonoBehaviour
         toggleNavMeshRigidBody(false);
         yield return new WaitForSeconds(.5f);
         // 2. apply explosive force to rigidboy.
-        _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position,_data.AtkExplosionRadius ,_data.AtkForceHeight);
+        _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position,_data.AtkExplosionRadius ,_data.AtkForceHeight, ForceMode.Impulse);
         yield return new WaitForSeconds(_data.PurpleAtkDuration - .5f);
         // 3. wait for duration
         toggleNavMeshRigidBody(true);
@@ -124,23 +124,23 @@ public class CreatureController : MonoBehaviour
 
     //    }
     //}
-    private async Task PurpleAtkTriggered()
-    {
-        // 1. disable rigidbody kinematics & nav mesh agent
-        toggleNavMeshRigidBody(false);
-        // 2. apply explosive force to rigidboy.
-        _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position, _data.AtkExplosionRadius, _data.AtkForceHeight);
-        // 3. wait for duration
-        await Task.Delay(_data.PurpleAtkDuration * 1000);
-        toggleNavMeshRigidBody(true);
-    }
+    //private async Task PurpleAtkTriggered()
+    //{
+    //    // 1. disable rigidbody kinematics & nav mesh agent
+    //    toggleNavMeshRigidBody(false);
+    //    // 2. apply explosive force to rigidboy.
+    //    _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position, _data.AtkExplosionRadius, _data.AtkForceHeight, ForceMode.Impulse);
+    //    // 3. wait for duration
+    //    await Task.Delay(_data.PurpleAtkDuration * 1000);
+    //    toggleNavMeshRigidBody(true);
+    //}
 
 
-    private async Task YellowAtkTriggered()
-    {
+    //private async Task YellowAtkTriggered()
+    //{
 
 
-    }
+    //}
 
 
 

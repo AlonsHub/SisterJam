@@ -29,6 +29,7 @@ public class CreatureData : ScriptableObject
 
     [SerializeField]
     private float _atkForceHeight;
+    [SerializeField]
     private float _atkExplosionRadius;
     public float AtkForceHeight => _atkForceHeight;
     public float AtkExplosionRadius => _atkExplosionRadius;

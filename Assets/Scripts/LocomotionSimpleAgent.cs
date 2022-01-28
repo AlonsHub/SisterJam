@@ -22,7 +22,7 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 		//agent.updatePosition = false;
 		cc = GetComponent<CharacterController>();
 	}
-
+	Vector3 vel = new Vector3();
 	void Update()
 	{
 
@@ -32,7 +32,7 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 
 		inputVector *= moveSpeed * Time.deltaTime;
 
-		transform.Translate(inputVector, Space.Self);
+		//transform.Translate(inputVector, Space.Self);
 		//Vector3 worldDeltaPosition = inputVector.x * transform.right + inputVector.y * transform.forward;
 		cc.Move(inputVector);
 		nextPos = transform.position + cc.velocity;
@@ -43,7 +43,18 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 
 		transform.LookAt(nextPos);
 
+		if (cc.isGrounded)
+		{
+			//vel = Vector3.down * -1f;
+		}
+		else
+		{
+			vel -= Physics.gravity * -2f * Time.deltaTime;
+		}
+		cc.Move(vel * Time.deltaTime);
+
 	}
+
 
     //void OnAnimatorMove()
     //{

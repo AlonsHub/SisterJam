@@ -10,6 +10,11 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 	Vector2 smoothDeltaPosition = Vector2.zero;
 	Vector2 velocity = Vector2.zero;
 
+	Vector3 nextPos;
+
+	[SerializeField]
+	float moveSpeed;
+
 	void Start () {
 		anim = GetComponent<Animator> ();
 		agent = GetComponent<NavMeshAgent> ();
@@ -17,7 +22,16 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 	}
 	
 	void Update () {
-		Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
+
+		Vector3 inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		if (inputVector.magnitude > 1)
+			inputVector.Normalize();
+
+		inputVector *= moveSpeed * Time.deltaTime;
+
+		transform.Translate(inputVector, Space.Self);
+		Vector3 worldDeltaPosition = inputVector.x * transform.right + inputVector.y * transform.forward;
+		nextPos = transform.position + worldDeltaPosition;
 
 		// Map 'worldDeltaPosition' to local space
 		float dx = Vector3.Dot (transform.right, worldDeltaPosition);
@@ -32,7 +46,8 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 		if (Time.deltaTime > 1e-5f)
 			velocity = smoothDeltaPosition / Time.deltaTime;
 
-		bool shouldMove = velocity.magnitude > 0.5f && agent.remainingDistance > agent.radius;
+		//bool shouldMove = velocity.magnitude > 0.5f && agent.remainingDistance > agent.radius;
+		bool shouldMove = velocity.magnitude > 0.0005f;
 
 		// Update animation parameters
 		anim.SetBool("move", shouldMove);
@@ -41,7 +56,8 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 
 		LookAt lookAt = GetComponent<LookAt> ();
 		if (lookAt)
-			lookAt.lookAtTargetPosition = agent.steeringTarget + transform.forward;
+			lookAt.lookAtTargetPosition = nextPos + transform.forward;
+			//lookAt.lookAtTargetPosition = agent.steeringTarget + transform.forward;
 
 //		// Pull character towards agent
 //		if (worldDeltaPosition.magnitude > agent.radius)

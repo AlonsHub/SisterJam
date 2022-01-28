@@ -16,5 +16,5 @@ MonoBehaviour:
   _purpleTriggerDistance: 25
   _purpleRepelper: 0.0223
   _purpleAtkForce: 5
-  _purpleAtkDuration: 2
   _atkForceHeight: 3
+  _purpleAtkDuration: 3

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Animal
   m_EditorClassIdentifier: 
   _yellowTriggerDistance: 30
-  _purpleTriggerDistance: 50
-  _purpleRepelper: 0.0906
+  _purpleTriggerDistance: 25
+  _purpleRepelper: 0.0567
   _purpleAtkForce: 2.07
+  _atkForceHeight: 3
   _purpleAtkDuration: 3
-  _atkForceHeight: 0

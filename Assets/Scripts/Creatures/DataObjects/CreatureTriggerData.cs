@@ -23,13 +23,15 @@ public class CreatureTriggerData : ScriptableObject
     private float _purpleRepelper;
     public float PurpleRepelper => _purpleRepelper;
 
-    [SerializeField, Range(0, 50)]
+    [SerializeField, Range(0, 500)]
     private float _purpleAtkForce;
     public float PurpleAtkForce => _purpleAtkForce;
 
     [SerializeField]
     private float _atkForceHeight;
+    private float _atkExplosionRadius;
     public float AtkForceHeight => _atkForceHeight;
+    public float AtkExplosionRadius => _atkExplosionRadius;
 
     [SerializeField]
     private int _purpleAtkDuration;

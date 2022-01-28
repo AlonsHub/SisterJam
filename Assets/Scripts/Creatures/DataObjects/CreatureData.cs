@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Creature Data/Trigger Data")]
-public class CreatureTriggerData : ScriptableObject
+[CreateAssetMenu(menuName = "Data/Creature Data")]
+public class CreatureData : ScriptableObject
 {
     #region => ===== Trigger Data =====
 

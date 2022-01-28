@@ -17,8 +17,8 @@ public class CreatureController : MonoBehaviour
     public Rigidbody RB => _rb;
 
     [SerializeField]
-    private CreatureTriggerData _data;
-    public CreatureTriggerData Data => _data;
+    private CreatureData _data;
+    public CreatureData Data => _data;
 
     #endregion
 

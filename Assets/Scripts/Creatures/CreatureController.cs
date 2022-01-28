@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -78,22 +80,44 @@ public class CreatureController : MonoBehaviour
 
 
     #region => ===== Player Effects Methods =====
+   
+   
 
     private void runPlayerAtkSequence(Players player)
     {
         switch (player)
         {
             case Players.Yellow:
-                if(_isYellowInRange) _ = YellowAtkTriggered();
+                //if(_isYellowInRange) _ = YellowAtkTriggered();
                 break;
             case Players.Purple:
-                if (_isPurpleInRange) _ = PurpleAtkTriggered();
+                if (_isPurpleInRange)
+                    StartCoroutine(nameof(PurpleAtkCorou));
                 break;
             default:
                 break;
         }
     }
+    IEnumerator PurpleAtkCorou()
+    {
+        // 1. disable rigidbody kinematics & nav mesh agent
+        toggleNavMeshRigidBody(false);
+        yield return new WaitForSeconds(.5f);
+        // 2. apply explosive force to rigidboy.
+        _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position, _data.AtkForceHeight);
+        yield return new WaitForSeconds(_data.PurpleAtkDuration - .5f);
+        // 3. wait for duration
+        toggleNavMeshRigidBody(true);
+    }
 
+    //IEnumerator YellowAtkCorou()
+    //{
+    //    //increase pull of both animal and monsters (pulling the animals MORE than monsters, enough to make animals FASTER than monsters in approaching yellow
+    //    while ()
+    //    {
+
+    //    }
+    //}
     private async Task PurpleAtkTriggered()
     {
         // 1. disable rigidbody kinematics & nav mesh agent
@@ -108,6 +132,8 @@ public class CreatureController : MonoBehaviour
 
     private async Task YellowAtkTriggered()
     {
+
+
     }
 
 

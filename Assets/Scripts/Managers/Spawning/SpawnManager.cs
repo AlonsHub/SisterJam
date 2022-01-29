@@ -11,8 +11,8 @@ public class SpawnManager : MonoBehaviour
     private SpawnManagerData _data;
     public SpawnManagerData Data => _data;
 
-    // TODO: use spawn areas instead!
-    public static List<SpawnerPointer> ActiveSpawners = new List<SpawnerPointer>();
+    public static List<RandomPositionArea> ActiveSpawners = new List<RandomPositionArea>();
+    public static List<RandomPositionArea> ActiveWanderAreas = new List<RandomPositionArea>();
 
     [SerializeField]
     private Transform _creaturesContainer;
@@ -37,8 +37,8 @@ public class SpawnManager : MonoBehaviour
 
     private void spawnCreature(CreatureController creature)
     {
-        GameObject creatureGO = Instantiate(creature.gameObject, getSpawnPoint());
-        creatureGO.transform.SetParent(CreaturesContainer);
+        GameObject creatureGO = Instantiate(creature.gameObject, CreaturesContainer);
+        creatureGO.transform.position = getSpawnPoint();
     }
 
     private CreatureController getCreature(bool isAnimal)
@@ -53,10 +53,16 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private Transform getSpawnPoint()
+    private Vector3 getSpawnPoint()
     {
-        // TODO: use spawn areas instead!!!
-        return ActiveSpawners.Count != 0 ? ActiveSpawners[Random.Range(0, ActiveSpawners.Count)].transform : _creaturesContainer;
+        if(ActiveSpawners.Count != 0)
+        {
+            return ActiveSpawners[Random.Range(0, ActiveSpawners.Count)].GetRandomPositionInArea();
+        }
+        else
+        {
+            return _creaturesContainer.position;
+        }
     }
 
     IEnumerator runSpawnLoop()

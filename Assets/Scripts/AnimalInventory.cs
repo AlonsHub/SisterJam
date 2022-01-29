@@ -7,7 +7,17 @@ public class AnimalInventory : MonoBehaviour
     public static AnimalInventory Instance;
 
     int animalCount = 0;
+    [SerializeField]
+    int zRows;
+    [SerializeField]
+    int xCols;
     public int AnimalCount { get => animalCount;}
+
+    //[SerializeField]
+    //Transform firstParkingSpot;
+
+    //[SerializeField]
+    //GameObject animalPrefab;
 
     private void Awake()
     {
@@ -25,6 +35,8 @@ public class AnimalInventory : MonoBehaviour
         animalCount++;
         //Call update UI
 
+        //Vector3 parkingSpot = firstParkingSpot.position + (animalCount%zRows)* Vector3.forward * 2f + (animalCount / zRows) * Vector3.right * 2f;
 
+        //Instantiate(animalPrefab, firstParkingSpot.position, firstParkingSpot.rotation);
     }
 }

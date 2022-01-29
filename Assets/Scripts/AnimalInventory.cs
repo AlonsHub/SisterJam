@@ -7,6 +7,7 @@ public class AnimalInventory : MonoBehaviour
     public static AnimalInventory Instance;
 
     int animalCount = 0;
+    public int AnimalCount { get => animalCount;}
 
     private void Awake()
     {

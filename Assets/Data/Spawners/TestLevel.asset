@@ -16,4 +16,4 @@ MonoBehaviour:
   - {fileID: 7810197747657762024, guid: 755ab871b2e2a4f34a5379b33ec3e133, type: 3}
   _monstersToLoad:
   - {fileID: 2290357067865339815, guid: aff73a808f18d4b949ba20d68dbab0e1, type: 3}
-  _spawnIntervalTime: 5
+  _spawnIntervalTime: 10

@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     #region => ===== Data =====
 
     [SerializeField]
+    private HealthData _healthData;
+    public HealthData HealthData => _healthData;
+
+    [SerializeField]
     private KeyCode _playerKeyCode;
     public KeyCode PlayerKeyCode => _playerKeyCode;
 

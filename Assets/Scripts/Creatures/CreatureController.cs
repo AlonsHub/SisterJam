@@ -10,6 +10,7 @@ public class CreatureController : MonoBehaviour
 
     #region => ===== Components =====
 
+    [Header("Components Refs")]
     [SerializeField]
     private NavMeshAgent _navMeshAgentManager;
     public NavMeshAgent NavMeshAgentManager => _navMeshAgentManager;
@@ -26,6 +27,7 @@ public class CreatureController : MonoBehaviour
 
     #region => ===== Data =====
 
+    [Header("Data")]
     [SerializeField]
     private bool _isPurpleInRange;
     public bool IsPurpleInRange => _isPurpleInRange;
@@ -33,6 +35,10 @@ public class CreatureController : MonoBehaviour
     [SerializeField]
     private bool _isYellowInRange;
     public bool IsYellowInRange => _isYellowInRange;
+
+    [SerializeField]
+    private bool _isYellowEffect;
+    public bool IsYellowEffect => _isYellowEffect;
 
     #endregion
 
@@ -53,7 +59,6 @@ public class CreatureController : MonoBehaviour
     }
 
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (_navMeshAgentManager.enabled == true) runNavMeshAgent();
@@ -63,17 +68,23 @@ public class CreatureController : MonoBehaviour
 
     private void runNavMeshAgent()
     {
+        // reset speed;
+        setSpeed();
+
         if (_isYellowInRange)
-            _navMeshAgentManager.destination = PlayerController.ActivePlayers[(int)Players.Yellow].transform.position; //WANDER
+        {
+            _navMeshAgentManager.destination = PlayerController.ActivePlayers[(int)Players.Yellow].transform.position;
+        }
         else
+        {
             Wander();
-            //_navMeshAgentManager.destination = TempCenter.Instance.transform.position; //WANDER
-        //_navMeshAgentManager.desiredVelocity = 
+        }
 
         if (_isPurpleInRange)
         {
             Vector3 v = transform.position - PlayerController.ActivePlayers[(int)Players.Purple].transform.position;
-            _navMeshAgentManager.nextPosition += v.normalized * _data.PurpleRepelper;
+            float proximityPurple = Vector3.Distance(transform.position, PlayerController.ActivePlayers[(int)Players.Purple].transform.position);
+            _navMeshAgentManager.nextPosition += v.normalized * (_data.PurpleRepelper * (_data.PurpleTriggerDistance - proximityPurple));
         }
     }
     // Wander attempt 1#
@@ -98,59 +109,69 @@ public class CreatureController : MonoBehaviour
         _navMeshAgentManager.enabled = isEnabled;
     }
 
+    /// <summary>
+    /// Sets the creature's speed. If Yellow Effect is enabled, we will multiply speed's value.
+    /// </summary>
+    private void setSpeed()
+    {
+        NavMeshAgentManager.speed = IsYellowEffect && IsYellowInRange ? _data.Speed * _data.YellowEffectSpeedMultiplier : _data.Speed;
+    }
+
     #endregion
 
 
     #region => ===== Player Effects Methods =====
-   
-   
 
     private void runPlayerAtkSequence(Players player)
     {
         switch (player)
         {
             case Players.Yellow:
-                //if(_isYellowInRange) _ = YellowAtkTriggered();
+                    StartCoroutine(nameof(YellowAtkCoroutine));
                 break;
             case Players.Purple:
                 if (_isPurpleInRange)
-                    StartCoroutine(nameof(PurpleAtkCorou));
+                    StartCoroutine(nameof(PurpleAtkCoroutine));
                 break;
             default:
                 break;
         }
     }
-    IEnumerator PurpleAtkCorou()
+    IEnumerator PurpleAtkCoroutine()
     {
         // 1. disable rigidbody kinematics & nav mesh agent
         toggleNavMeshRigidBody(false);
         // 2. apply explosive force to rigidboy.
         yield return new WaitForSeconds(.01f);
-        _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position, _data.AtkExplosionRadius, _data.AtkForceHeight, ForceMode.Impulse);
+        _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position, _data.AtkExplosionRadius, 0, ForceMode.Impulse);
         yield return new WaitForSeconds(_data.PurpleAtkDuration);
         // 3. wait for duration
         toggleNavMeshRigidBody(true);
     }
 
-    //IEnumerator YellowAtkCorou()
-    //{
-    //    //increase pull of both animal and monsters (pulling the animals MORE than monsters, enough to make animals FASTER than monsters in approaching yellow
-    //    while ()
-    //    {
+    IEnumerator YellowAtkCoroutine()
+    {
+        //increase pull of both animal and monsters (pulling the animals MORE than monsters, enough to make animals FASTER than monsters in approaching yellow
+        toggleIsYellowEffectRunning(true);
+        yield return new WaitForSeconds(_data.YellowEffectDuration);
+        toggleIsYellowEffectRunning(false);
+    }
 
-    //    }
-    //}
-    
+    private void toggleIsYellowEffectRunning(bool isEnabled)
+    {
+        _isYellowEffect = isEnabled;
+    }
+
     #endregion
 
     #region => ===== Player Distance Methods =====
 
     public void CheckIfPlayersInRange()
     {
-        if(PlayerController.ActivePlayers[(int)Players.Purple] != null)
+        if (PlayerController.ActivePlayers[(int)Players.Purple] != null)
             _isPurpleInRange = checkIfPurpleInRange();
-        if(PlayerController.ActivePlayers[(int)Players.Yellow] != null)
-        _isYellowInRange = checkIfYellowInRange();
+        if (PlayerController.ActivePlayers[(int)Players.Yellow] != null)
+            _isYellowInRange = checkIfYellowInRange();
     }
 
     private bool checkIfYellowInRange()

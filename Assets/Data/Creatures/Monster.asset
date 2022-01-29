@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e2f038f0f6364eda891ca1899d40565, type: 3}
   m_Name: Monster
   m_EditorClassIdentifier: 
-  _yellowTriggerDistance: 50
+  _speed: 4.1
+  _yellowTriggerDistance: 40
   _purpleTriggerDistance: 25
-  _purpleRepelper: 0.03
+  _purpleRepelper: 0.0102
   _purpleAtkForce: 91
-  _atkForceHeight: 0
   _atkExplosionRadius: 200
   _purpleAtkDuration: 3
+  _yellowEffectSpeedMultiplier: 1.191
+  _yellowEffectDuration: 3

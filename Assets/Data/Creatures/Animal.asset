@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e2f038f0f6364eda891ca1899d40565, type: 3}
   m_Name: Animal
   m_EditorClassIdentifier: 
+  _speed: 3.5
   _yellowTriggerDistance: 30
   _purpleTriggerDistance: 25
-  _purpleRepelper: 0.1055
+  _purpleRepelper: 0.0805
   _purpleAtkForce: 20
-  _atkForceHeight: 0
   _atkExplosionRadius: 200
   _purpleAtkDuration: 3
+  _yellowEffectSpeedMultiplier: 2.173
+  _yellowEffectDuration: 3

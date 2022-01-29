@@ -78,6 +78,10 @@ public class PlayerController : MonoBehaviour
         //Stop motion
 
     }
+
+    /// <summary>
+    /// In the Boo animation, there is an event that calls Growl()
+    /// </summary>
     public void Growl()
     {
         if (AtkActionEvent != null) AtkActionEvent(_playerType); 

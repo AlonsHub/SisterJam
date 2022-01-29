@@ -65,6 +65,11 @@ public class PlayerController : MonoBehaviour
     {
         if (AtkActionEvent != null) AtkActionEvent(_playerType);
 
+        //Start cooldown from 0
+
+        //Call animation
+
+
     }
 
     #endregion

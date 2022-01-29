@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _yellowTriggerDistance: 30
   _purpleTriggerDistance: 25
-  _purpleRepelper: 0.0491
-  _purpleAtkForce: 2.07
-  _atkForceHeight: 3
+  _purpleRepelper: 0.1055
+  _purpleAtkForce: 20
+  _atkForceHeight: 0
+  _atkExplosionRadius: 200
   _purpleAtkDuration: 3

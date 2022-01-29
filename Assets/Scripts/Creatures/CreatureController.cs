@@ -62,8 +62,12 @@ public class CreatureController : MonoBehaviour
 
     private void runNavMeshAgent()
     {
-
+        if(_isYellowInRange)
         _navMeshAgentManager.destination = PlayerController.ActivePlayers[(int)Players.Yellow].transform.position; //WANDER
+        else
+            _navMeshAgentManager.destination = TempCenter.Instance.transform.position; //WANDER
+        //_navMeshAgentManager.desiredVelocity = 
+
         if (_isPurpleInRange)
         {
             Vector3 v = transform.position - PlayerController.ActivePlayers[(int)Players.Purple].transform.position;

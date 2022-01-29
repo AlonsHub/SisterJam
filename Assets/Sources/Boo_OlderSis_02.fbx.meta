@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Take 001
+    second: Boo
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -24,7 +24,9 @@ ModelImporter:
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
       to improve retargeting quality.\n\t'mixamorig:LeftHand_02' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n\t'mixamorig:RightHand_02'
+      transforms and has rotation animation that will be discarded.\n\t'mixamorig:LeftHand_03'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'mixamorig:RightHand_02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'mixamorig:RightHand_03'
       is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
@@ -39,7 +41,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
+      name: Boo
       takeName: Take 001
       internalID: 0
       firstFrame: 2

@@ -44,11 +44,7 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 		if(shouldMove)
 		transform.LookAt(nextPos);
 
-		if (cc.isGrounded)
-		{
-			//vel = Vector3.down * -1f;
-		}
-		else
+		if (!cc.isGrounded)
 		{
 			vel -= Physics.gravity * -2f * Time.deltaTime;
 		}

@@ -3,6 +3,14 @@
 [CreateAssetMenu(menuName = "Data/Creature Data")]
 public class CreatureData : ScriptableObject
 {
+    #region => ===== Creature Data =====
+
+    [SerializeField]
+    private float _speed;
+    public float Speed => _speed;
+
+    #endregion
+
     #region => ===== Trigger Data =====
 
     [Header("Players Trigger Settings")]
@@ -16,9 +24,9 @@ public class CreatureData : ScriptableObject
 
     #endregion
 
-    #region => ===== Player Effect Data =====
+    #region => ===== Purple Effect Data =====
 
-    [Header("Player Effect Settings")]
+    [Header("Purple Effect Settings")]
     [SerializeField, Range(0, 0.15f)]
     private float _purpleRepelper;
     public float PurpleRepelper => _purpleRepelper;
@@ -28,16 +36,25 @@ public class CreatureData : ScriptableObject
     public float PurpleAtkForce => _purpleAtkForce;
 
     [SerializeField]
-    private float _atkForceHeight;
-    [SerializeField]
     private float _atkExplosionRadius;
-    public float AtkForceHeight => _atkForceHeight;
     public float AtkExplosionRadius => _atkExplosionRadius;
 
     [SerializeField]
     private int _purpleAtkDuration;
     public int PurpleAtkDuration => _purpleAtkDuration;
 
+    #endregion
+
+    #region => ===== Yellow Atk Data =====
+
+    [Header("Yellow Effect Settings")]
+    [SerializeField, Range(1,3)]
+    private float _yellowEffectSpeedMultiplier;
+    public float YellowEffectSpeedMultiplier => _yellowEffectSpeedMultiplier;
+
+    [SerializeField, Range(0, 10)]
+    private float _yellowEffectDuration;
+    public float YellowEffectDuration => _yellowEffectDuration;
 
     #endregion
 

@@ -21,10 +21,15 @@ public class PlayerController : MonoBehaviour
     private Players _playerType;
     public Players PlayerType => _playerType;
 
+    Animator anim;
     #endregion
 
     #region => ===== Update =====
 
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
     private void OnEnable()
     {
         ActivePlayers[(int)PlayerType] = this;
@@ -61,15 +66,21 @@ public class PlayerController : MonoBehaviour
         if (AtkActionEvent != null) AtkActionEvent(_playerType);
     }
 
-    private void PurpleAtk()
+    private void PurpleAtk() //changed to "Start player attack" - Growl() calls the event
     {
-        if (AtkActionEvent != null) AtkActionEvent(_playerType);
+        //if (AtkActionEvent != null) AtkActionEvent(_playerType);
 
         //Start cooldown from 0
 
         //Call animation
+        anim.SetTrigger("growl"); //in the Boo animation, there is an event that calls Growl()
 
+        //Stop motion
 
+    }
+    public void Growl()
+    {
+        if (AtkActionEvent != null) AtkActionEvent(_playerType); 
     }
 
     #endregion

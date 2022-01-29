@@ -16,6 +16,11 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 
 	CharacterController cc;
 
+	[SerializeField]
+	string horizontalAxisName;
+	[SerializeField]
+	string verticalAxisName;
+
 	void Start () {
 		anim = GetComponent<Animator> ();
 		//agent = GetComponent<NavMeshAgent> ();
@@ -26,7 +31,7 @@ public class LocomotionSimpleAgent : MonoBehaviour {
 	void Update()
 	{
 
-		Vector3 inputVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		Vector3 inputVector = new Vector3(Input.GetAxis(horizontalAxisName), 0, Input.GetAxis(verticalAxisName));
 		if (inputVector.magnitude > 1)
 			inputVector.Normalize();
 

@@ -44,6 +44,7 @@ public class CreatureController : MonoBehaviour
     private void OnDisable()
     {
         PlayerController.AtkActionEvent -= (Players playerType) => { runPlayerAtkSequence(playerType); };
+        StopAllCoroutines();
     }
 
     private void Update()
@@ -62,10 +63,11 @@ public class CreatureController : MonoBehaviour
 
     private void runNavMeshAgent()
     {
-        if(_isYellowInRange)
-        _navMeshAgentManager.destination = PlayerController.ActivePlayers[(int)Players.Yellow].transform.position; //WANDER
+        if (_isYellowInRange)
+            _navMeshAgentManager.destination = PlayerController.ActivePlayers[(int)Players.Yellow].transform.position; //WANDER
         else
-            _navMeshAgentManager.destination = TempCenter.Instance.transform.position; //WANDER
+            Wander();
+            //_navMeshAgentManager.destination = TempCenter.Instance.transform.position; //WANDER
         //_navMeshAgentManager.desiredVelocity = 
 
         if (_isPurpleInRange)
@@ -77,7 +79,17 @@ public class CreatureController : MonoBehaviour
     // Wander attempt 1#
     private void Wander()
     {
+        if (_navMeshAgentManager.remainingDistance > _navMeshAgentManager.stoppingDistance + .1f)
+            return;
 
+        if (NavMesh.SamplePosition(Vector3.zero + Random.insideUnitSphere * Random.Range(50, 100), out NavMeshHit hit, 120, NavMesh.AllAreas))
+        {
+            _navMeshAgentManager.destination = hit.position;
+        }
+        else
+        {
+            _navMeshAgentManager.destination = Vector3.zero;
+        }
     }
 
     private void toggleNavMeshRigidBody(bool isEnabled)
@@ -112,10 +124,10 @@ public class CreatureController : MonoBehaviour
     {
         // 1. disable rigidbody kinematics & nav mesh agent
         toggleNavMeshRigidBody(false);
-        yield return new WaitForSeconds(.5f);
         // 2. apply explosive force to rigidboy.
-        _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position,_data.AtkExplosionRadius ,_data.AtkForceHeight, ForceMode.Impulse);
-        yield return new WaitForSeconds(_data.PurpleAtkDuration - .5f);
+        yield return new WaitForSeconds(.01f);
+        _rb.AddExplosionForce(_data.PurpleAtkForce, PlayerController.ActivePlayers[(int)Players.Purple].transform.position, _data.AtkExplosionRadius, _data.AtkForceHeight, ForceMode.Impulse);
+        yield return new WaitForSeconds(_data.PurpleAtkDuration);
         // 3. wait for duration
         toggleNavMeshRigidBody(true);
     }
